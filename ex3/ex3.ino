@@ -25,6 +25,7 @@ void setup() {
   pinMode(I2, OUTPUT);
   pinMode(I3, OUTPUT);
   pinMode(I4, OUTPUT);
+  pinMode(A0, INPUT);
   servo1.attach(6);  // attaches the servo on pin 6 to the servo object
   Serial.begin(9600);
 }
@@ -33,6 +34,7 @@ void loop() {
   Serial.println("Step Forward");
   forward();
   delay(2000);
+  stop();
 
   Serial.println("Step Forward");
   forwardTime(2000);
