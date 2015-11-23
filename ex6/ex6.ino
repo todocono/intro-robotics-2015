@@ -2,9 +2,10 @@
    Example 6
    Introduction to Robotics
    by Rodolfo Cossovich at New York University
-   Description: Using example 5 with a Switch-Case statement
+   Description: Using example 5 with a Switch-Case statement. Sensor also got hysteresis
 */
 
+int HYS = 20;
 byte state = 0; //default state
 int LDR1 = A1;
 
@@ -34,10 +35,10 @@ void updateState(void) {  //note that this function is giving back the value as 
   int sensorValue = analogRead(LDR1);  // read the input on analog pin:
   Serial.println(sensorValue);  // we print on the serial monitor the value, just for debugging
 
-  if (sensorValue > 200) {
+  if (sensorValue > 200 + HYS ) {
     state = 1;         // in case the sensor is reading high value, there is light
   }
-  else {
+  else if (sensorValue <= 200 - HYS) {
     state =  0;  // in case the sensor is reading low value, it is dark
   }
 }
