@@ -1,9 +1,9 @@
 /*
    Example 1
-   Introduction to Robotics 
+   Introduction to Robotics
    by Rodolfo Cossovich at New York University
    Description: Arduino by itself is not capable of handling big currents or voltage. That is why we use a motor driver.
-   We are connecting all wires as the schematic, using an external battery. Tweak numbers of delays and speed
+   Connect all wires as the schematic, using an external battery. Tweak numbers of delays and speed
 */
 boolean reverse = 0;
 
@@ -32,54 +32,36 @@ void setup()
 
 void loop()
 {
-  setMotor1(tweakSpeed, reverse);
-  setMotor2(tweakSpeed, reverse);
-  delay(tweakTime);
-  setMotor1(0, 0);
-  setMotor2(0, 0);
-  delay(100);
-  reverse = 1;//
-  setMotor1(tweakSpeed, reverse);
-  setMotor2(tweakSpeed, reverse);
-  delay(tweakTime);
-  setMotor1(0, 0);
-  setMotor2(0, 0);
-  delay(100);
-  reverse = 0;
-  tweakSpeed = 255;
-  setMotor1(tweakSpeed, reverse);
-  setMotor2(tweakSpeed, reverse);
-  delay(tweakTime);
-  setMotor1(0, 0);
-  setMotor2(0, 0);
-  delay(100);
-  reverse = 1;//
-  setMotor1(tweakSpeed, reverse);
-  setMotor2(tweakSpeed, reverse);
-  delay(tweakTime);
-}
-
-void setMotor1(int tweakSpeed, boolean reverse)
-{
-  if (!tweakSpeed) {
-    digitalWrite(enablePin1, LOW);
-    digitalWrite(in1Pin1, LOW);
-    digitalWrite(in2Pin1, LOW);
-  }
+  // move forward
   analogWrite(enablePin1, tweakSpeed);
-  digitalWrite(in1Pin1, ! reverse);
-  digitalWrite(in2Pin1, reverse);
-}
-
-
-void setMotor2(int tweakSpeed, boolean reverse)
-{
-  if (!tweakSpeed) {
-    digitalWrite(enablePin2, LOW);
-    digitalWrite(in1Pin2, LOW);
-    digitalWrite(in2Pin2, LOW);
-  }
+  digitalWrite(in1Pin1, HIGH);
+  digitalWrite(in2Pin1, LOW);
   analogWrite(enablePin2, tweakSpeed);
-  digitalWrite(in1Pin2, ! reverse);
-  digitalWrite(in2Pin2, reverse);
+  digitalWrite(in1Pin2, HIGH);
+  digitalWrite(in2Pin2, LOW);
+  delay(tweakTime);
+  //stop both motors
+  digitalWrite(enablePin2, LOW);
+  digitalWrite(in1Pin2, LOW);
+  digitalWrite(in2Pin2, LOW);
+  digitalWrite(enablePin1, LOW);
+  digitalWrite(in1Pin1, LOW);
+  digitalWrite(in2Pin1, LOW);
+  delay(tweakTime);
+  //reverse direction by inverting the inXpinX
+  analogWrite(enablePin1, tweakSpeed);
+  digitalWrite(in1Pin1, LOW);
+  digitalWrite(in2Pin1, HIGH);
+  analogWrite(enablePin2, tweakSpeed);
+  digitalWrite(in1Pin2, LOW);
+  digitalWrite(in2Pin2, HIGH);
+  delay(tweakTime);
+  //stop both motors
+  digitalWrite(enablePin2, LOW);
+  digitalWrite(in1Pin2, LOW);
+  digitalWrite(in2Pin2, LOW);
+  digitalWrite(enablePin1, LOW);
+  digitalWrite(in1Pin1, LOW);
+  digitalWrite(in2Pin1, LOW);
+  delay(tweakTime);  
 }

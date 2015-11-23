@@ -1,34 +1,31 @@
+/*
+   Example 4
+   Introduction to Robotics
+   by Rodolfo Cossovich at New York University
+   Description: Motors are actuators with no feedback loop. We are using here a servo motor to showcase hardware.
+   Note the analogRead using the input of sensors. Test different inputs and different actions.
+*/
 
 #include <Servo.h>
 
 Servo servo1;  // create servo object to control a servo
 // twelve servo objects can be created on most boards
 
-
-
 void setup() {
-  // put your setup code here, to run once:
-
   servo1.attach(6);  // attaches the servo on pin 6 to the servo object
   Serial.begin(9600);
-
-
-
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-
-
   Serial.print("Reading Sensor1 with ");
   int value1 = readSensor1();
   Serial.println( value1 );
-
-  Serial.println("Moving Servo");
-  sweepServo1();
-
+  
+  if (value1 > 100) {             //note the usage of a conditional to compare the value coming from the sensor
+    Serial.println("Moving Servo");
+    sweepServo1();
+  }
 }
 
 

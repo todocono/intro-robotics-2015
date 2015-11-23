@@ -1,3 +1,11 @@
+/*
+   Example 2
+   Introduction to Robotics
+   by Rodolfo Cossovich at New York University
+   Description: In order to optimize the code we will need to use functions. This example is based on code example 1
+   Note how turn left and right are quite similar. Use the Serial Monitor to read incoming messages.
+*/
+
 #define E1 10  // Enable Pin for motor 1
 #define E2 11  // Enable Pin for motor 2
 
@@ -9,15 +17,12 @@
 int speed1 = 250;
 
 void setup() {
-
   pinMode(E1, OUTPUT);
   pinMode(E2, OUTPUT);
-
   pinMode(I1, OUTPUT);
   pinMode(I2, OUTPUT);
   pinMode(I3, OUTPUT);
   pinMode(I4, OUTPUT);
-
   Serial.begin(9600);
 }
 

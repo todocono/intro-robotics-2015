@@ -1,8 +1,14 @@
+/*
+   Example 3
+   Introduction to Robotics
+   by Rodolfo Cossovich at New York University
+   Description: Motors are actuators with no feedback loop. We are using here a servo motor to showcase hardware.
+   Note the analogRead using the input of sensors. Test different inputs. Note the usage of the parameter RIGHT/LEFT
+*/
 
 #include <Servo.h>
 
 Servo servo1;  // create servo object to control a servo
-// twelve servo objects can be created on most boards
 
 #define E1 10  // Enable Pin for motor 1
 #define E2 11  // Enable Pin for motor 2
@@ -38,17 +44,13 @@ void loop() {
 
   Serial.println("Step Forward");
   forwardTime(2000);
-  
   Serial.println("Step Forward");
   forwardTime(2000);
-
   Serial.println("Turn Right");
   turn(RIGHT, 500);
-
   Serial.println("Turn Left");
   turn(LEFT, 500);
-
-
+  
   Serial.print("Reading Sensor1 with ");
   int value1 = readSensor1();
   Serial.println( value1 );
@@ -61,11 +63,9 @@ void loop() {
 void forward( void ) {
   digitalWrite(E1, LOW); // both motors stopped while transitioning
   digitalWrite(E2, LOW);
-
   delay(200);
   analogWrite(E1, speed1); // Activate both motors at same speed
   analogWrite(E2, speed1);
-
   digitalWrite(I1, LOW);	// with opposite direction than before
   digitalWrite(I2, HIGH);
   digitalWrite(I3, LOW);
@@ -76,11 +76,9 @@ void forward( void ) {
 void back( void ) {
   digitalWrite(E1, LOW); // both motors stopped while transitioning
   digitalWrite(E2, LOW);
-
   delay(200);
   analogWrite(E1, speed1); // Activate both motors at same speed
   analogWrite(E2, speed1);
-
   digitalWrite(I1, HIGH);	// with opposite direction than foward
   digitalWrite(I2, LOW);
   digitalWrite(I3, HIGH);
@@ -96,7 +94,6 @@ void forwardTime( unsigned int time) {
 void turn ( byte clockwise, unsigned int time ) {
   digitalWrite(E1, LOW); // both motors stopped while transitioning
   digitalWrite(E2, LOW);
-
   delay(200);
   analogWrite(E1, speed1); // Activate both motors at same speed
   analogWrite(E2, speed1);
