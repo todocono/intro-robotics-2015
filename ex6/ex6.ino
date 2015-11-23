@@ -1,9 +1,8 @@
 /*
-   Example 5
+   Example 6
    Introduction to Robotics
    by Rodolfo Cossovich at New York University
-   Description: Using Finite State Machines is a good method to map an automatic behaviour.
-   In this case, the input is an LDR and the output is an LED. The change of state triggers only one action.
+   Description: Using example 5 with a Switch-Case statement
 */
 
 byte state = 0; //default state
@@ -17,13 +16,16 @@ void setup() {
 void loop() {
   updateState();
   delay(10);        // delay in between reads for stability
-  if (state == 0) {
-    night();
-  }
-  else {
-    if (state == 1) {
+  switch (state) {
+    case 0:
+      night();
+      break;
+    case 1:
       day();
-    }
+      break;
+    default:
+      day();
+
   }
 }
 
