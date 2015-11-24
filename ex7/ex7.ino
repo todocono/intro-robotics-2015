@@ -9,7 +9,7 @@
 
 
 
-int HYS = 20;
+int HYS = 20;   //hysteresis cycle, to avoid unstable on/off conditions
 byte state = 0; //default state
 int LDR1 = A1;
 int LDR2 = A2;
@@ -31,7 +31,6 @@ void setup() {
 
   getEnvi();
   Serial.begin(9600);// initialize serial communication at 9600 bits per second:
-
 }
 
 void loop() {
@@ -58,8 +57,6 @@ void loop() {
   }
 }
 
-
-
 void updateState(void) {  //note that this function is giving back the value as a result of evaluating the inputs
   int sensorValue1 = analogRead(LDR1);  // read the input on analog pin:
   Serial.print("LDR1 acquired : ");
@@ -84,7 +81,6 @@ void updateState(void) {  //note that this function is giving back the value as 
   }
 }
 
-
 void forwardTime( unsigned int time) {
   forward();
   delay(time);
@@ -101,7 +97,7 @@ void turnAngle ( int angle ) {
   }
 }
 
-void getEnvi( void ) {
+void getEnvi( void ) {  //read the environmental light from both sensors, averages it and stores it
   int sensorValue1 = analogRead(LDR1);  // read the input on analog pin:
   Serial.print("LDR1 acquired : ");
   Serial.println(sensorValue1);  // we print on the serial monitor the value, just for debugging
@@ -110,7 +106,7 @@ void getEnvi( void ) {
   Serial.print("LDR2 acquired : ");
   Serial.println(sensorValue2);  // we print on the serial monitor the value, just for debugging
 
-  enviLight = (sensorValue1) + (sensorValue2 /2);  // read the input on analog pin:
+  enviLight = (sensorValue1 /2) + (sensorValue2 /2);  // read the input on analog pin:
   Serial.print("Environment Light calculated at : ");
   Serial.println(enviLight);  // we print on the serial monitor the value, just for debugging
   
@@ -125,7 +121,6 @@ void forward( void ) {
 
 
 void turn ( byte clockwise, unsigned int time ) {
-
   if (clockwise) {
     digitalWrite(LED1, HIGH); // turn ON left LED
   } else {

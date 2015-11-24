@@ -6,8 +6,6 @@
    there is light to the left or light to the right. Initially it measures and averages the environment light.
 */
 
-
-
 int HYS = 20;
 byte state = 0; //default state
 int LDR1 = A1;
@@ -42,7 +40,6 @@ void setup() {
 
   getEnvi();
   Serial.begin(9600);// initialize serial communication at 9600 bits per second:
-
 }
 
 void loop() {
@@ -75,14 +72,12 @@ void updateState(void) {  //note that this function is giving back the value as 
   int sensorValue1 = analogRead(LDR1);  // read the input on analog pin:
   Serial.print("LDR1 acquired : ");
   Serial.println(sensorValue1);  // we print on the serial monitor the value, just for debugging
-
   if (sensorValue1 >= (enviLight - HYS) ) {
     state += 1;         // in case the sensor is reading high value, there is light
   }
   else {
     state =  0;  // in case the sensor is reading low value, it is dark
   }
-
   int sensorValue2 = analogRead(LDR2);  // read the input on analog pin:
   Serial.print("LDR2 acquired : ");
   Serial.println(sensorValue2);  // we print on the serial monitor the value, just for debugging
@@ -95,13 +90,11 @@ void updateState(void) {  //note that this function is giving back the value as 
   }
 }
 
-
 void forwardTime( unsigned int time) {
   forward();
   delay(time);
   stopMotors();
 }
-
 
 void turnAngle ( int angle ) {
   if (angle > 0) {
@@ -121,7 +114,7 @@ void getEnvi( void ) {
   Serial.print("LDR2 acquired : ");
   Serial.println(sensorValue2);  // we print on the serial monitor the value, just for debugging
 
-  enviLight = (sensorValue1) + (sensorValue2 /2);  // read the input on analog pin:
+  enviLight = (sensorValue1 /2) + (sensorValue2 /2);  // read the input on analog pin:
   Serial.print("Environment Light calculated at : ");
   Serial.println(enviLight);  // we print on the serial monitor the value, just for debugging
   
@@ -139,7 +132,6 @@ void forward( void ) {
   digitalWrite(I4, HIGH);
 }
 
-
 void back( void ) {
   digitalWrite(E1, LOW); // both motors stopped while transitioning
   digitalWrite(E2, LOW);
@@ -151,7 +143,6 @@ void back( void ) {
   digitalWrite(I3, HIGH);
   digitalWrite(I4, LOW);
 }
-
 
 void turn ( byte clockwise, unsigned int time ) {
   digitalWrite(E1, LOW); // both motors stopped while transitioning
@@ -174,7 +165,6 @@ void turn ( byte clockwise, unsigned int time ) {
   delay(time);
   stopMotors();
 }
-
 
 void stopMotors ( void ) {
   digitalWrite(E1, LOW); // both motors stopped while transitioning
