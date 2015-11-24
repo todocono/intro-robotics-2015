@@ -1,10 +1,9 @@
 /*
-   Example 7
+   Example 8
    Introduction to Robotics
    by Rodolfo Cossovich at New York University
    Description: Using two LDRs we can trigger different states: there is light in front of us, there is none,
    there is light to the left or light to the right. Initially it measures and averages the environment light.
-   For this example we will only use LEDs to indicate the state
 */
 
 
@@ -14,16 +13,28 @@ byte state = 0; //default state
 int LDR1 = A1;
 int LDR2 = A2;
 
-int LED1 = 2;
-int LED2 = 3;
 
-int enviLight = 0;
+#define E1 10  // Enable Pin for motor 1
+#define E2 11  // Enable Pin for motor 2
+
+#define I1 8  // Control pin 1 for motor 1
+#define I2 9  // Control pin 2 for motor 1
+#define I3 12  // Control pin 1 for motor 2
+#define I4 13  // Control pin 2 for motor 2
+
 #define RIGHT 0
 #define LEFT  1
+int speed1 = 250;
+int enviLight = 0;
 
 void setup() {
-  pinMode(LED1, OUTPUT);
-  pinMode(LED2, OUTPUT);
+  pinMode(E1, OUTPUT);
+  pinMode(E2, OUTPUT);
+
+  pinMode(I1, OUTPUT);
+  pinMode(I2, OUTPUT);
+  pinMode(I3, OUTPUT);
+  pinMode(I4, OUTPUT);
 
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
@@ -117,19 +128,48 @@ void getEnvi( void ) {
 }
 
 void forward( void ) {
-  digitalWrite(LED1, HIGH); // turn ON both LEDs 
-  digitalWrite(LED2, HIGH); // turn ON both LEDs 
-  
+  digitalWrite(E1, LOW); // both motors stopped while transitioning
+  digitalWrite(E2, LOW);
+  delay(200);
+  analogWrite(E1, speed1); // Activate both motors at same speed
+  analogWrite(E2, speed1);
+  digitalWrite(I1, LOW);  // with opposite direction than before
+  digitalWrite(I2, HIGH);
+  digitalWrite(I3, LOW);
+  digitalWrite(I4, HIGH);
 }
 
 
+void back( void ) {
+  digitalWrite(E1, LOW); // both motors stopped while transitioning
+  digitalWrite(E2, LOW);
+  delay(200);
+  analogWrite(E1, speed1); // Activate both motors at same speed
+  analogWrite(E2, speed1);
+  digitalWrite(I1, HIGH); // with opposite direction than foward
+  digitalWrite(I2, LOW);
+  digitalWrite(I3, HIGH);
+  digitalWrite(I4, LOW);
+}
+
 
 void turn ( byte clockwise, unsigned int time ) {
+  digitalWrite(E1, LOW); // both motors stopped while transitioning
+  digitalWrite(E2, LOW);
+  delay(200);
+  analogWrite(E1, speed1); // Activate both motors at same speed
+  analogWrite(E2, speed1);
 
   if (clockwise) {
-    digitalWrite(LED1, HIGH); // turn ON left LED
+    digitalWrite(I1, LOW);  // with opposite direction than before
+    digitalWrite(I2, HIGH);
+    digitalWrite(I3, LOW);
+    digitalWrite(I4, HIGH);
   } else {
-    digitalWrite(LED2, HIGH); // turn ON right LED
+    digitalWrite(I1, HIGH); // with opposite direction than before
+    digitalWrite(I2, LOW);
+    digitalWrite(I3, HIGH);
+    digitalWrite(I4, LOW);
   }
   delay(time);
   stopMotors();
@@ -137,6 +177,10 @@ void turn ( byte clockwise, unsigned int time ) {
 
 
 void stopMotors ( void ) {
- digitalWrite(LED1, HIGH); // turn OFF both LED
- digitalWrite(LED2, HIGH); // turn OFF both LEDs
+  digitalWrite(E1, LOW); // both motors stopped while transitioning
+  digitalWrite(E2, LOW);
+  digitalWrite(I1, LOW);  // with opposite direction than before
+  digitalWrite(I2, LOW);
+  digitalWrite(I3, LOW);
+  digitalWrite(I4, LOW);
 }
