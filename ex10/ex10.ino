@@ -1,5 +1,5 @@
 /*
-Example 9
+Example 10
    Introduction to Robotics
    by Rodolfo Cossovich at New York University
    Description: This software uses HC-SR04 on pins 13 and 12
@@ -15,7 +15,8 @@ void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
- 
+  pinMode(led, OUTPUT);
+  pinMode(led2, OUTPUT);
 }
 
 void loop() {
@@ -23,7 +24,6 @@ void loop() {
   digitalWrite(trigPin, LOW);  // Added this line
   delayMicroseconds(2); // Added this line
   digitalWrite(trigPin, HIGH);
-//  delayMicroseconds(1000); - Removed this line
   delayMicroseconds(10); // Added this line
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
